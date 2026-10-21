@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capital Raising Board Bulletin | Oando</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #F4F5FA; overflow: hidden; }
+  .frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .frame.waiting { visibility: hidden; }
+</style>
+</head>
+<body>
+<iframe class="frame" id="f0" title="Capital Raising Board Bulletin | Oando" allowfullscreen></iframe>
+
+<script>
+  // Power BI secure embed link (reportEmbed?reportId=...&autoAuth=true&ctid=...)
+  var REPORT_URL = "https://app.powerbi.com/reportEmbed?reportId=870c6906-9b47-4566-be1c-02aae0ab05cf&autoAuth=true&ctid=a3329a53-02fd-4abb-94cd-6d1b954419f6&filterPaneEnabled=false&navContentPaneEnabled=false";
+  var EVERY_MINUTES = 240;
+
+  var current = document.getElementById("f0");
+  current.src = REPORT_URL;
+
+  // Load a fresh copy behind the current one, then swap, so the screen never goes blank
+  function reloadReport() {
+    var next = document.createElement("iframe");
+    next.className = "frame waiting";
+    next.title = "Capital Raising Board Bulletin | Oando";
+    next.allowFullscreen = true;
+    next.src = REPORT_URL + "&t=" + Date.now();
+    next.onload = function () {
+      setTimeout(function () {           // give the visuals time to render
+        next.classList.remove("waiting");
+        current.remove();
+        current = next;
+      }, 15000);
+    };
+    document.body.appendChild(next);
+  }
+
+  setInterval(reloadReport, EVERY_MINUTES * 60 * 1000);
+</script>
+</body>
+</html>
